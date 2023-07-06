@@ -36,7 +36,15 @@
 
 /* _____________ Your Code Here _____________ */
 
-type DeepReadonly<T> = any
+type IsObject<T> = T extends Object ? true : false
+type IsArray<T> = T extends any[] ? true : false
+
+type DeepReadonly<T> =
+T extends never
+  ? T
+  : keyof T extends never
+    ? T
+    : { readonly [key in keyof T]: DeepReadonly<T[key]> }
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

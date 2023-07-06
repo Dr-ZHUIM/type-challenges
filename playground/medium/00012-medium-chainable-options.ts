@@ -7,7 +7,10 @@
 
   Chainable options are commonly used in Javascript. But when we switch to TypeScript, can you properly type it?
 
-  In this challenge, you need to type an object or a class - whatever you like - to provide two function `option(key, value)` and `get()`. In `option`, you can extend the current config type by the given key and value. We should about to access the final result via `get`.
+  In this challenge, you need to type an object or a class - whatever you like -
+   to provide two function `option(key, value)` and `get()`.
+    In `option`, you can extend the current config type by the given key and value.
+    We should about to access the final result via `get`.
 
   For example
 
@@ -39,11 +42,10 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Chainable = {
-  option(key: string, value: any): any
-  get(): any
+type Chainable<T = {}> = {
+  option<K extends string, V>(key: K extends keyof T ? never : K, value: V): Chainable<Omit<T, K> & { [key in K]: V }>
+  get: () => T
 }
-
 /* _____________ Test Cases _____________ */
 import type { Alike, Expect } from '@type-challenges/utils'
 
