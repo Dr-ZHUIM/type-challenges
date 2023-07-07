@@ -29,7 +29,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type LookUp<U, T> = any
+type LookUp<U, T> = U extends { type: T } ? U : never
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -46,6 +46,8 @@ interface Dog {
 }
 
 type Animal = Cat | Dog
+
+type test = LookUp<Animal, 'dog'>
 
 type cases = [
   Expect<Equal<LookUp<Animal, 'dog'>, Dog>>,

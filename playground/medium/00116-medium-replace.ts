@@ -18,7 +18,14 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Replace<S extends string, From extends string, To extends string> = any
+type Replace<S extends string, From extends string, To extends string> =
+From extends ''
+  ? S
+  : S extends `${infer F}${From}${infer L}`
+    ? `${F}${To}${L}`
+    : S
+
+type test = Replace<'foobarbar', '', 'foo'>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
