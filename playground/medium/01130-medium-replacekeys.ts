@@ -8,7 +8,6 @@
   Implement a type ReplaceKeys, that replace keys in union types, if some type has not this key, just skip replacing,
   A type takes three arguments.
 
-
   For example:
 
   ```ts
@@ -30,7 +29,6 @@
     flag: number
   }
 
-
   type Nodes = NodeA | NodeB | NodeC
 
   type ReplacedNodes = ReplaceKeys<Nodes, 'name' | 'flag', {name: number, flag: string}> // {type: 'A', name: number, flag: string} | {type: 'B', id: number, flag: string} | {type: 'C', name: number, flag: string} // would replace name from string to number, replace flag from number to string.
@@ -43,7 +41,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type ReplaceKeys<U, T, Y> = any
+type ReplaceKeys<U, T, Y> = { [key in keyof U]: key extends T ? key extends keyof Y ? Y[key] : never : U[key] }
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -97,6 +95,7 @@ type NoNameNodeC = {
 }
 
 type Nodes = NodeA | NodeB | NodeC
+
 type ReplacedNodes = ReplacedNodeA | ReplacedNodeB | ReplacedNodeC
 type NodesNoName = NoNameNodeA | NoNameNodeC | NodeB
 
