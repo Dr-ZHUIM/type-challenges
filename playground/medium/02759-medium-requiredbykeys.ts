@@ -27,7 +27,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type RequiredByKeys<T, K> = any
+type RequiredByKeys<T extends {}, K extends keyof T = keyof T> = Omit<T & Required<Pick<T, K & keyof T>>, never>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -49,6 +49,8 @@ interface UserRequiredNameAndAge {
   age: number
   address?: string
 }
+
+type test = RequiredByKeys<User, 'name'>
 
 type cases = [
   Expect<Equal<RequiredByKeys<User, 'name'>, UserRequiredName>>,

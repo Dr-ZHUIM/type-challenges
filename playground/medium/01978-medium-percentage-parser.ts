@@ -31,8 +31,14 @@
 */
 
 /* _____________ Your Code Here _____________ */
+type checkPrefix<T> = T extends '+' | '-' ? T : never
+type checkSuffix<T> = T extends `${infer N}%` ? [N, '%'] : [T, '']
+type PercentageParser<A extends string> =
+A extends `${checkPrefix<infer F>}${infer R}`
+  ? [F, ...checkSuffix<R>]
+  : ['', ...checkSuffix<A>]
 
-type PercentageParser<A extends string> = any
+type test0 = PercentageParser<'+100%'>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

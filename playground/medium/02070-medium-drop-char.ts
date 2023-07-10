@@ -18,8 +18,12 @@
 
 /* _____________ Your Code Here _____________ */
 
-type DropChar<S, C> = any
-
+type DropChar<S extends string, C, T extends string = ''> =
+S extends `${infer F}${infer R}`
+  ? F extends C
+    ? DropChar<R, C, T>
+    : DropChar<R, C, `${T}${F}`>
+  : T
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 
