@@ -21,7 +21,15 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Fibonacci<T extends number> = any
+type Fibonacci<
+T extends number,
+I extends 1[] = [1, 1, 1],
+A2 extends 1[] = [1],
+A1 extends 1[] = [1]> =
+  T extends 1 | 2 ? 1
+    : T extends I['length']
+      ? [...A2, ...A1]['length']
+      : Fibonacci<T, [...I, 1], A1, [...A2, ...A1]>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

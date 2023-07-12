@@ -19,8 +19,18 @@
 
 /* _____________ Your Code Here _____________ */
 
-type AllCombinations<S> = any
+type StringToUnion<T> = T extends `${infer F}${infer R}` ? F | StringToUnion<R> : T
 
+type AllCombinations<
+S extends string,
+T extends string = StringToUnion<S>,
+U extends string = T,
+> =
+S extends `${infer F}${infer R}`
+  ? U extends U
+    ? `${U}${AllCombinations<R, U extends '' ? T : Exclude<T, U>>}`
+    : never
+  : ''
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 

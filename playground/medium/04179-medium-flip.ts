@@ -20,7 +20,12 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Flip<T> = any
+type Case = true | false | undefined | null
+
+type Flip<T extends Record<PropertyKey, any>> =
+  {
+    [key in keyof T as `${T[key]}`]: key
+  }
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect, NotEqual } from '@type-challenges/utils'
