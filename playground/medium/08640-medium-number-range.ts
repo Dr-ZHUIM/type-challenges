@@ -16,7 +16,20 @@
 
 /* _____________ Your Code Here _____________ */
 
-type NumberRange<L, H> = any
+type ConstructTuple<L extends number, A extends unknown[] = [], R extends 1[] = [1], I extends number = 0> =
+  I extends L
+    ? A
+    : ConstructTuple<L, [...A, unknown], [...R, 1], R['length']>
+
+type NumberRange<
+L extends number,
+H extends number,
+A extends number[] = [],
+R extends unknown[] = [...ConstructTuple<L>, unknown],
+> =
+  L extends H
+    ? [...A, H][number]
+    : NumberRange<R['length'], H, [...A, L], [...R, unknown]>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

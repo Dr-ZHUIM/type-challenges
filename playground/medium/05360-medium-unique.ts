@@ -19,8 +19,24 @@
 */
 
 /* _____________ Your Code Here _____________ */
+type IsEqual<A, B> = (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B
+  ? 1
+  : 2
+  ? true
+  : false
 
-type Unique<T> = any
+type Diff<T extends unknown[], Ele> = T extends [infer F, ...infer R]
+  ? IsEqual<F, Ele> extends true
+    ? false
+    : Diff<R, Ele>
+  : true
+
+type Unique<T, Res extends unknown[] = []> =
+  T extends [infer F, ...infer R]
+    ? Diff<Res, F> extends true
+      ? Unique<R, [...Res, F]>
+      : Unique<R, Res>
+    : Res
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

@@ -18,7 +18,10 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Combination<T extends string[]> = any
+type Combination<T extends string[], U extends string = never> =
+  T extends [infer F, ...infer R]
+    ? Combination<R, >
+    : U
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

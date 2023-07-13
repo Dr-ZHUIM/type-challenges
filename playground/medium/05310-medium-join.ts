@@ -19,7 +19,14 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Join<T, U> = any
+type Join<T extends (string | number)[], U extends string | number, S extends string = ''> =
+  T['length'] extends 1
+    ? `${S}${T[0]}`
+    : T extends [infer F extends string | number, ...infer R extends (string | number)[]]
+      ? Join<R, U, `${S}${F}${U}`>
+      : S
+
+type test = Join<['2', '2', '2'], 1>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

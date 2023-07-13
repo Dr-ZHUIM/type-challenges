@@ -18,7 +18,18 @@
 
 /* _____________ Your Code Here _____________ */
 
-type IndexOf<T, U> = any
+type Check<T, U> = U extends T ? (T extends U ? true : false) : false
+
+type IndexOf<T extends unknown[], U, I extends 1[] = []> =
+  U extends T[number]
+    ? T extends [infer F, ...infer R]
+      ? Check<F, U> extends true
+        ? I['length']
+        : IndexOf<R, U, [...I, 1]>
+      : -1
+    : -1
+
+type test = IndexOf<[string, 1, number, 'a'], number>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

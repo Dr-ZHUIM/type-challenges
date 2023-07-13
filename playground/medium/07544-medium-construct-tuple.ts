@@ -18,7 +18,10 @@
 
 /* _____________ Your Code Here _____________ */
 
-type ConstructTuple<L extends number> = any
+type ConstructTuple<L extends number, A extends unknown[] = [], R extends 1[] = [1], I extends number = 0> =
+  I extends L
+    ? A
+    : ConstructTuple<L, [...A, unknown], [...R, 1], R['length']>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
