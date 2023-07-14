@@ -20,7 +20,10 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Subsequence<T extends any[]> = any
+type Subsequence<T extends any[], Prefix extends any[] = []> =
+T extends [infer F, ...infer R]
+  ? Subsequence<R, Prefix | [...Prefix, F]>
+  : Prefix
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

@@ -22,7 +22,12 @@
 
 /* _____________ Your Code Here _____________ */
 
-type GetMiddleElement<T> = any
+type GetMiddleElement<T> =
+  T extends [infer L, ...infer M, infer R]
+    ? M extends []
+      ? [L, R]
+      : GetMiddleElement<M>
+    : T
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

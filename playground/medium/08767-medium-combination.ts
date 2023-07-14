@@ -18,10 +18,10 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Combination<T extends string[], U extends string = never> =
-  T extends [infer F, ...infer R]
-    ? Combination<R, >
-    : U
+type Combination<T extends string[], A extends string = T[number], U extends string = A> =
+  U extends A
+    ? U | `${U} ${Combination<[], Exclude<A, U>>}`
+    : never
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

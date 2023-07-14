@@ -18,8 +18,14 @@
 */
 
 /* _____________ Your Code Here _____________ */
+type StringToUnion<T> = T extends `${infer F}${infer R}` ? F | StringToUnion<R> : T
 
-type CheckRepeatedChars<T extends string> = any
+type CheckRepeatedChars<T extends string> =
+  T extends `${infer F}${infer R}`
+    ? F extends StringToUnion<R>
+      ? true
+      : CheckRepeatedChars<R>
+    : false
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
