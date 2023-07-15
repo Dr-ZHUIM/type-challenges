@@ -19,7 +19,12 @@
 
 /* _____________ Your Code Here _____________ */
 
-type CheckRepeatedTuple<T extends unknown[]> = any
+type CheckRepeatedTuple<T extends unknown[]> =
+  T extends [infer F, ...infer R]
+    ? F extends R[number]
+      ? true
+      : false
+    : false
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

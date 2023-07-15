@@ -18,8 +18,11 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Transpose<M extends number[][]> = any
-
+type Transpose<M extends number[][], R = M['length'] extends 0 ? [] : M[0]> = {
+  [X in keyof R]: {
+    [Y in keyof M]: X extends keyof M[Y] ? M[Y][X] : never
+  }
+}
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 import { ExpectFalse, NotEqual } from '@type-challenges/utils'

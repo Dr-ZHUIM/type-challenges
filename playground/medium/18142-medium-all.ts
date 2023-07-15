@@ -22,7 +22,13 @@
 
 /* _____________ Your Code Here _____________ */
 
-type All = any
+type Match<T, S> =
+(<G>() => G extends T ? 1 : 2) extends
+(<G>() => G extends S ? 1 : 2)
+  ? true
+  : false
+
+type All<T extends unknown[], S> = Match<T[number], S> extends true ? true : false
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
